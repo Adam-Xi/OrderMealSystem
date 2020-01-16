@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>点餐页面</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="./css/font-awesome.css" rel="stylesheet" />
+    <link href="./css/adminia.css" rel="stylesheet" /> 
+    <link href="./css/adminia-responsive.css" rel="stylesheet" />
+	<link href="./css/pages/dashboard.css" rel="stylesheet" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ </head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+	
+	<div class="navbar-inner">
+		
+		<div class="container">
+			
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 				
+			</a>
+			
+			<a class="brand" href="./">Welcome </a>
+			
+			<div class="nav-collapse">
+			
+				<ul class="nav pull-right">
+
+					<li class="dropdown">
+						
+						<a data-toggle="dropdown" class="dropdown-toggle " href="#">
+							账户 <b class="caret"></b>							
+						</a>
+						
+						<ul class="dropdown-menu">
+							<li>
+								<a href="./account.html"><i class="icon-user"></i> Account Setting  </a>
+							</li>
+							
+							<li>
+								<a href="./change_password.html"><i class="icon-lock"></i> Change Password</a>
+							</li>
+							
+							<li class="divider"></li>
+							
+							<li>
+								<a href="./"><i class="icon-off"></i> Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				
+			</div> <!-- /nav-collapse -->
+			
+		</div> <!-- /container -->
+		
+	</div> <!-- /navbar-inner -->
+	
+</div> <!-- /navbar -->
+
+
+<div id="content">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div class="span9">
+				
+				<div class="stat-container">
+	
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span>2</span>							
+							Chargebacks							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+				</div> <!-- /stat-container -->
+				
+				<div class="widget widget-table"  id="app">
+										
+					<div class="widget-header">
+						<i class="icon-th-list"></i>
+						<h3>{{author}}: {{calc}}元</h3> <!--插值表达式-->
+						<button type="button" class="" v-on:click="send()">提交</button>
+					</div> <!-- /widget-header -->
+					
+					<div class="widget-content">
+						<table class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>菜名</th>
+									<th>价格</th>
+									<th>选择</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<tr v-for="dish in dishes">
+									<td>{{dish.dish_id}}</td>
+									<td>{{dish.name}}</td>
+									<td>{{dish.price / 100}}元</td>
+									<td class="action-td">
+										<input type="checkbox" class="" v-model="dish.selected">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					
+					</div> <!-- /widget-content -->
+					
+				</div> <!-- /widget -->
+				
+			</div> <!-- /span9 -->
+			
+			
+		</div> <!-- /row -->
+		
+	</div> <!-- /container -->
+	
+</div> <!-- /content -->
+					
+    
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="./js/jquery-1.7.2.min.js"></script>
+<script src="./js/excanvas.min.js"></script>
+<script src="./js/jquery.flot.js"></script>
+<script src="./js/jquery.flot.pie.js"></script>
+<script src="./js/jquery.flot.orderBars.js"></script>
+<script src="./js/jquery.flot.resize.js"></script>
+<script src="./js/bootstrap.js"></script>
+<script src="./js/charts/bar.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+	var table_id = '{{table_id}}';
+	var app = new Vue({
+		el: '#app',
+		data: {
+			author: '菜单',
+			dishes: [
+				{
+					dish_id: 1,
+					name: '红烧肉',
+					price: 2000
+				},
+				{
+					dish_id: 2,
+					name: '回锅肉',
+					price: 4300
+				},
+				{
+					dish_id: 3,
+					name: '红烧鱼块',
+					price: 9800
+				}				
+			]
+		},
+		methods: {
+			get_dishes() {
+				//从服务器上获取到菜品数据
+				// ajax  实质：http客户端  
+				// html 原生的 ajax 方法很不好用， 而 JQuery 中提供的 ajax 库很方便
+				$.ajax({
+					type: "get",
+					url: "/dish",
+					context: this,  //指定当前对象，若不指定当前对象，此时指的是 $ 这个 JQuery 的对象，而此处需要的是 app 这个 Vue 的对象
+					success: function(data, status) {
+						this.dishes = data;
+					}
+				});
+			},
+			send() {
+				// alert("点击提交按钮");
+
+				//1、校验是否选择菜品
+				if (this.calc == 0){
+					alert("当前未选择菜品！")
+					return;
+				}
+				//2、构造请求
+				// http 请求中的 body 部分
+				var dish_ids = [];
+				for(var index in this.dishes) {
+					if(this.dishes[index].selected) {
+						dish_ids.push(this.dishes[index].dish_id);
+					}
+				}
+				var body = {
+					table_id: table_id,
+					time: new Date().toLocaleDateString(),
+					dish_ids: dish_ids,
+				}
+				$.ajax({
+					type: "post",
+					url: '/order',
+					data: JSON.stringify(body),
+					contentType: "application/json",
+					success: function(data, status) {
+						alert("下单成功");
+					}
+				})
+			}
+		},
+		computed: {
+			calc() {  //计算总价，调用的时间由 Vue 决定
+				var total_price = 0;
+				for(var index in this.dishes) {
+					if (this.dishes[index].selected) {
+						total_price += this.dishes[index].price;
+					}
+				}
+				return total_price / 100;
+			}
+		}
+	})
+	app.get_dishes();
+</script>
+
+  </body>
+</html>
