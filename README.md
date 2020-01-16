@@ -1,6 +1,5 @@
 # 数据库的操作：
 
-
 > #include <mysql/mysql.h>
 >
 >   //1、创建句柄
