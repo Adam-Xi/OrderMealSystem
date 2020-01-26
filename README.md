@@ -10,7 +10,7 @@ date: 2020-02-02
 # 功能演示
 
 ### 用户点餐页面
-![image](https://s2.ax1x.com/2020/02/11/1Trg3Q.md.gif )
+[![1Trg3Q.md.gif](https://s2.ax1x.com/2020/02/11/1Trg3Q.md.gif)](https://imgchr.com/i/1Trg3Q)
 
 ### 商家订单查看页面
 TODO
