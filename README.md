@@ -10,7 +10,7 @@ date: 2020-02-02
 # 功能演示
 
 ### 用户点餐页面
-![image](https://github.com/Adam-Xi/OrderMealSystem/tree/master/image/点餐系统项目演示一.gif)
+![image](https://github.com/Adam-Xi/OrderMealSystem/blob/master/image/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA%E4%B8%80.gif )
 
 ### 商家订单查看页面
 TODO
