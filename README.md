@@ -11,7 +11,7 @@ date: 2020-02-02
 # 功能演示
 
 ### 用户点餐页面
-![1T6Uc4.gif](https://s2.ax1x.com/2020/02/11/1T6Uc4.md.gif )
+![1T6Uc4.gif](https://s2.ax1x.com/2020/02/11/1T6Uc4.gif)
 
 ### 商家订单查看页面
 TODO
