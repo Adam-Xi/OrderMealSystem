@@ -13,6 +13,7 @@ int main()
         printf("mysql connect failed! %s\n", mysql_error(mysql));
         return 1;
     }
+    
     //3、设置编码方式
     mysql_set_character_set(mysql, "utf8");
     //4、拼装SQL语句
