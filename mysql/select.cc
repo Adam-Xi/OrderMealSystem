@@ -16,9 +16,11 @@ int main()
     
     //3、设置编码方式
     mysql_set_character_set(mysql, "utf8");
+   
     //4、拼装SQL语句
     char sql[1024] = {0};
     sprintf(sql, "select * from dish_table");
+    
     //5、执行SQL语句
     int ret = mysql_query(mysql, sql);
     if(ret)
