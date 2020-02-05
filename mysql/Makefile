@@ -10,4 +10,3 @@ select:select.cc
 .PHONY:clean
 clean:
 	rm insert select
-
