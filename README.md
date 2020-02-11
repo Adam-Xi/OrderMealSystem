@@ -10,7 +10,7 @@ date: 2020-02-02
 # 功能演示
 
 ### 用户点餐页面
-<iframe height=500 width=500 src="https://s2.ax1x.com/2020/02/11/1TkAg0.gif">
+![image](https://s2.ax1x.com/2020/02/11/1TkAg0.gif)
 
 ### 商家订单查看页面
 TODO
