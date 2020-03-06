@@ -6,6 +6,7 @@ int main()
 {
     //1、创建一个数据库操作句柄
     MYSQL* mysql = mysql_init(NULL);
+    
     //2、建立句柄和数据库服务器之间的联系（连接服务器）
     if(mysql_real_connect(mysql, "127.0.0.1", "root", "9826", "order_system", 3306, NULL, 0) == NULL)
     {
